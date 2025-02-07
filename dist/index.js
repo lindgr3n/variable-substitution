@@ -30117,7 +30117,7 @@ class EnvTreeUtility {
         }
         let key = jsonObjectKey[index];
         console.log('key', key);
-        console.log('envChild', envVarTree.child[jsonObjectKey[index]]);
+        console.log('envChild', envVarTree.child[key.toUpperCase()]);
         if (envVarTree.child[jsonObjectKey[index]] === undefined || typeof envVarTree.child[jsonObjectKey[index]] === 'function') {
             return undefined;
         }
@@ -30218,7 +30218,6 @@ class JsonSubstitution {
     substituteJsonVariable(jsonObject, envObject) {
         let isValueChanged = false;
         console.log('jsonObject', JSON.stringify(jsonObject));
-        console.log('envObject', JSON.stringify(envObject));
         for (let jsonChild in jsonObject) {
             console.log('jsonChild', jsonChild);
             let jsonChildArray = jsonChild.split('.');

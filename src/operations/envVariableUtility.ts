@@ -85,7 +85,7 @@ export class EnvTreeUtility {
         }
         let key = jsonObjectKey[index];
         console.log('key', key);
-        console.log('envChild', envVarTree.child[ jsonObjectKey[index] ]);
+        console.log('envChild', envVarTree.child[ key.toUpperCase() ]);
         
         
         if(envVarTree.child[ jsonObjectKey[index] ] === undefined || typeof envVarTree.child[ jsonObjectKey[index] ] === 'function') {
