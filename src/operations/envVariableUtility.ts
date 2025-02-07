@@ -14,8 +14,6 @@ export function getVariableMap() {
     Object.keys(variables).forEach(key => {
         if(!isPredefinedVariable(key)) {
             variableMap.set(key, variables[key]);
-        } else {
-            console.log('Not matching isPredefinedVariable', key);
         }
     });
     return variableMap;
@@ -63,7 +61,9 @@ export class EnvTreeUtility {
         };
         for(let [key, value] of envVariables.entries()) {
             let envVarTreeIterator = envVarTree;
-            let envVariableNameArray = key.split('_');  // TODO: verify
+            // TODO: SUpport ignore setting
+            // TODO: Support split char setting
+            let envVariableNameArray = key.includes('__') ? key : key.split('_');  // TODO: verify
             
             for(let variableName of envVariableNameArray) {
                 if(envVarTreeIterator.child[variableName] === undefined || typeof envVarTreeIterator.child[variableName] === 'function') {
