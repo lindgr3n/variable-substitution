@@ -1,5 +1,5 @@
-import core = require('@actions/core');
-import github = require('@actions/github');
+import * as core from '@actions/core';
+//import * as github  from '@actions/github';
 import { EnvTreeUtility } from "./operations/envVariableUtility";
 import { JsonSubstitution } from './operations/jsonVariableSubstitutionUtility';
 import { XmlDomUtility } from "./operations/xmlDomUtility";
