@@ -30045,6 +30045,7 @@ exports.isObject = isObject;
 function isPredefinedVariable(variable) {
     let predefinedVarPrefix = ['runner.', 'azure_http_user_agent', 'common.', 'system.'];
     for (let varPrefix of predefinedVarPrefix) {
+        console.log('varPrefix', varPrefix);
         if (variable.toLowerCase().startsWith(varPrefix)) {
             return true;
         }
