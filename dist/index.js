@@ -30095,7 +30095,7 @@ class EnvTreeUtility {
         };
         for (let [key, value] of envVariables.entries()) {
             let envVarTreeIterator = envVarTree;
-            let envVariableNameArray = key.split('.');
+            let envVariableNameArray = key.split('_'); // TODO: verify
             for (let variableName of envVariableNameArray) {
                 if (envVarTreeIterator.child[variableName] === undefined || typeof envVarTreeIterator.child[variableName] === 'function') {
                     envVarTreeIterator.child[variableName] = {
@@ -30214,6 +30214,7 @@ class JsonSubstitution {
     }
     substituteJsonVariable(jsonObject, envObject) {
         let isValueChanged = false;
+        console.log('jsonObject', JSON.stringify(jsonObject));
         for (let jsonChild in jsonObject) {
             let jsonChildArray = jsonChild.split('.');
             let resultNode = this.envTreeUtil.checkEnvTreePath(jsonChildArray, 0, jsonChildArray.length, envObject);
@@ -30958,7 +30959,7 @@ class VariableSubstitution {
                     fileContent = fileContent.slice(1);
                 }
                 if (this.isJson(file, fileContent)) {
-                    console.log("Applying variable substitution on JSON file: " + file);
+                    console.log("Applying variable substitution on JSON file!: " + file);
                     let jsonSubsitution = new jsonVariableSubstitutionUtility_1.JsonSubstitution();
                     let jsonObject = this.fileContentCache.get(file);
                     let isJsonSubstitutionApplied = jsonSubsitution.substituteJsonVariable(jsonObject, envVariableUtility_1.EnvTreeUtility.getEnvVarTree());

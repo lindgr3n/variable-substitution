@@ -61,7 +61,7 @@ export class EnvTreeUtility {
         };
         for(let [key, value] of envVariables.entries()) {
             let envVarTreeIterator = envVarTree;
-            let envVariableNameArray = key.split('.');
+            let envVariableNameArray = key.split('_');  // TODO: verify
             
             for(let variableName of envVariableNameArray) {
                 if(envVarTreeIterator.child[variableName] === undefined || typeof envVarTreeIterator.child[variableName] === 'function') {
