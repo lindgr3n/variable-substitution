@@ -194,12 +194,15 @@ function cloneMatchOptions(matchOptions: MatchOptions): MatchOptions {
 function match(list: string[], patterns: string[] | string, patternRoot?: string, options?: MatchOptions): string[] {
     // trace parameters
     core.debug(`patternRoot: '${patternRoot}'`);
+    console.log('Input options: ' + JSON.stringify(options));
+
     options = options || _getDefaultMatchOptions(); // default match options
 
     // convert pattern to an array
     if (typeof patterns == 'string') {
         patterns = [patterns as string];
     }
+    console.log('Applying options: ' + JSON.stringify(options));
 
     // hashtable to keep track of matches
     let map: { [item: string]: boolean } = {};
