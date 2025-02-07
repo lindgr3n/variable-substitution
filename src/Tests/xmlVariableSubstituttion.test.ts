@@ -3,12 +3,10 @@ import * as envVarUtility from "../operations/envVariableUtility";
 import { XmlDomUtility } from "../operations/xmlDomUtility";
 import { XmlSubstitution } from "../operations/xmlVariableSubstitution";
 
-import chai = require('chai');
+import { expect } from 'chai';
 import fs = require('fs');
 import path = require('path');
 import sinon = require("sinon");
-
-var expect = chai.expect;
 
 describe('Test Xml Variable Substitution', () => {
     it("Should substitute", () => {
