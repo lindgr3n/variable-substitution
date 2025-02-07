@@ -30097,6 +30097,7 @@ class EnvTreeUtility {
             let envVarTreeIterator = envVarTree;
             // TODO: SUpport ignore setting
             // TODO: Support split char setting
+            console.log('Checking key', key);
             let envVariableNameArray = key.includes('__') ? key : key.split('_'); // TODO: verify
             for (let variableName of envVariableNameArray) {
                 if (envVarTreeIterator.child[variableName] === undefined || typeof envVarTreeIterator.child[variableName] === 'function') {
