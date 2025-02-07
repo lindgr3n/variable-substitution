@@ -30045,7 +30045,6 @@ exports.isObject = isObject;
 function isPredefinedVariable(variable) {
     let predefinedVarPrefix = ['runner.', 'azure_http_user_agent', 'common.', 'system.'];
     for (let varPrefix of predefinedVarPrefix) {
-        console.log('varPrefix', varPrefix);
         if (variable.toLowerCase().startsWith(varPrefix)) {
             return true;
         }
@@ -30058,6 +30057,9 @@ function getVariableMap() {
     Object.keys(variables).forEach(key => {
         if (!isPredefinedVariable(key)) {
             variableMap.set(key, variables[key]);
+        }
+        else {
+            console.log('Not matching isPredefinedVariable', key);
         }
     });
     return variableMap;
