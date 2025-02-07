@@ -84,14 +84,15 @@ export class EnvTreeUtility {
             return envVarTree;
         }
         let key = jsonObjectKey[index];
+        let envChild = envVarTree.child[ key.toUpperCase() ]
         console.log('key', key);
-        console.log('envChild', envVarTree.child[ key.toUpperCase() ]);
+        console.log('envChild', envChild);
         
         
-        if(envVarTree.child[ jsonObjectKey[index] ] === undefined || typeof envVarTree.child[ jsonObjectKey[index] ] === 'function') {
+        if(envChild === undefined || typeof envChild === 'function') {
             return undefined;
        }
-        return this.checkEnvTreePath(jsonObjectKey, index + 1, jsonObjectKeyLength, envVarTree.child[ jsonObjectKey[index] ]);
+        return this.checkEnvTreePath(jsonObjectKey, index + 1, jsonObjectKeyLength, envChild);
     }
 
     private envVarTree: varTreeNode = null;
