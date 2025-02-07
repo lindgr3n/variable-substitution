@@ -17,7 +17,7 @@ export class VariableSubstitution {
         try {
             vars = JSON.parse(varsInput)
           } catch (e) {
-            throw new Error(`Cannot parse JSON secrets.
+            throw new Error(`Cannot parse JSON vars.
             Make sure you add the following to this action:
             
             with:
@@ -26,7 +26,24 @@ export class VariableSubstitution {
         }
         for (const key of Object.keys(vars)) {
             core.exportVariable(key, vars[key])
-            core.info(`Exported vars -> ${key}`)
+            core.info(`Exported var -> ${key}`)
+        }
+
+        let secrets: Record<string, string>
+        let secretsInput = core.getInput("secrets", { required: false });
+        try {
+            secrets = JSON.parse(secretsInput)
+          } catch (e) {
+            throw new Error(`Cannot parse JSON secrets.
+            Make sure you add the following to this action:
+            
+            with:
+                secrets: \${{ toJSON(vars) }}
+            `)
+        }
+        for (const key of Object.keys(secrets)) {
+            core.exportVariable(key, secrets[key])
+            core.info(`Exported secret -> ${key}`)
         }
 
         let filesInput = core.getInput("files", { required: true });

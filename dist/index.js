@@ -30097,8 +30097,8 @@ class EnvTreeUtility {
             let envVarTreeIterator = envVarTree;
             // TODO: SUpport ignore setting
             // TODO: Support split char setting
-            console.log('Checking key', key);
-            let envVariableNameArray = key.includes('__') ? key : key.split('_'); // TODO: verify
+            console.debug('Checking key', key);
+            let envVariableNameArray = key.split(/_(?!_)/); // Split on single underscore, but not double underscore
             for (let variableName of envVariableNameArray) {
                 if (envVarTreeIterator.child[variableName] === undefined || typeof envVarTreeIterator.child[variableName] === 'function') {
                     envVarTreeIterator.child[variableName] = {
@@ -30947,7 +30947,7 @@ class VariableSubstitution {
                 vars = JSON.parse(varsInput);
             }
             catch (e) {
-                throw new Error(`Cannot parse JSON secrets.
+                throw new Error(`Cannot parse JSON vars.
             Make sure you add the following to this action:
             
             with:
@@ -30956,7 +30956,24 @@ class VariableSubstitution {
             }
             for (const key of Object.keys(vars)) {
                 core.exportVariable(key, vars[key]);
-                core.info(`Exported vars -> ${key}`);
+                core.info(`Exported var -> ${key}`);
+            }
+            let secrets;
+            let secretsInput = core.getInput("secrets", { required: false });
+            try {
+                secrets = JSON.parse(secretsInput);
+            }
+            catch (e) {
+                throw new Error(`Cannot parse JSON secrets.
+            Make sure you add the following to this action:
+            
+            with:
+                secrets: \${{ toJSON(vars) }}
+            `);
+            }
+            for (const key of Object.keys(secrets)) {
+                core.exportVariable(key, secrets[key]);
+                core.info(`Exported secret -> ${key}`);
             }
             let filesInput = core.getInput("files", { required: true });
             let files = filesInput.split(",");
