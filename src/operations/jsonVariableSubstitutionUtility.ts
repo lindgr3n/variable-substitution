@@ -10,8 +10,10 @@ export class JsonSubstitution {
     substituteJsonVariable(jsonObject, envObject) {
         let isValueChanged: boolean = false;
         console.log('jsonObject', JSON.stringify(jsonObject));
+        console.log('envObject', JSON.stringify(envObject));
         
         for(let jsonChild in jsonObject) {
+            console.log('jsonChild', jsonChild);            
             let jsonChildArray = jsonChild.split('.');
             let resultNode = this.envTreeUtil.checkEnvTreePath(jsonChildArray, 0, jsonChildArray.length, envObject);
             if(resultNode != undefined) {

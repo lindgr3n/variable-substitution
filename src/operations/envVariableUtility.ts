@@ -83,6 +83,11 @@ export class EnvTreeUtility {
         if(index == jsonObjectKeyLength) {
             return envVarTree;
         }
+        let key = jsonObjectKey[index];
+        console.log('key', key);
+        console.log('envChild', envVarTree.child[ jsonObjectKey[index] ]);
+        
+        
         if(envVarTree.child[ jsonObjectKey[index] ] === undefined || typeof envVarTree.child[ jsonObjectKey[index] ] === 'function') {
             return undefined;
        }
