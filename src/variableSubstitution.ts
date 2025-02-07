@@ -12,6 +12,23 @@ import fileEncoding = require('./operations/fileEncodingUtility');
 
 export class VariableSubstitution {
     async run() {
+        let vars: Record<string, string>
+        let varsInput = core.getInput("vars", { required: false });
+        try {
+            vars = JSON.parse(varsInput)
+          } catch (e) {
+            throw new Error(`Cannot parse JSON secrets.
+            Make sure you add the following to this action:
+            
+            with:
+                vars: \${{ toJSON(vars) }}
+            `)
+        }
+        for (const key of Object.keys(vars)) {
+            core.exportVariable(key, vars[key])
+            core.info(`Exported vars -> ${key}`)
+        }
+
         let filesInput = core.getInput("files", { required: true });
         let files = filesInput.split(",");
         if(files.length > 0){

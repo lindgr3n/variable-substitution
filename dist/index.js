@@ -30941,6 +30941,23 @@ class VariableSubstitution {
     }
     run() {
         return __awaiter(this, void 0, void 0, function* () {
+            let vars;
+            let varsInput = core.getInput("vars", { required: false });
+            try {
+                vars = JSON.parse(varsInput);
+            }
+            catch (e) {
+                throw new Error(`Cannot parse JSON secrets.
+            Make sure you add the following to this action:
+            
+            with:
+                vars: \${{ toJSON(vars) }}
+            `);
+            }
+            for (const key of Object.keys(vars)) {
+                core.exportVariable(key, vars[key]);
+                core.info(`Exported vars -> ${key}`);
+            }
             let filesInput = core.getInput("files", { required: true });
             let files = filesInput.split(",");
             if (files.length > 0) {
