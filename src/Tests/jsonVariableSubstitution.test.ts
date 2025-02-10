@@ -79,7 +79,7 @@ describe('Test JSON Variable Substitution', () => {
             },
             'profile': {
                 'users': ['arjgupta', 'raagra', 'muthuk'],
-                'preimum_level': {
+                'premium_level': {
                     'arjgupta': 'V1',
                     'raagra': 'V2',
                     'muthuk': {
@@ -144,6 +144,6 @@ describe('Test JSON Variable Substitution', () => {
     });
 
     it("Validate Object", () => {
-        expect(jsonObject['profile']['preimum_level']).to.deep.equal({"suaggar": "V4", "rok": "V5", "asranja": { "type" : "V6"}});
+        expect(jsonObject['profile']['premium_level']).to.deep.equal({"suaggar": "V4", "rok": "V5", "asranja": { "type" : "V6"}});
     });
 });
