@@ -30056,7 +30056,8 @@ function getVariableMap() {
     let variables = process.env;
     Object.keys(variables).forEach(key => {
         if (!isPredefinedVariable(key)) {
-            variableMap.set(key, variables[key]);
+            // Store each environment key as uppercase to make it case-insensitive
+            variableMap.set(key.toUpperCase(), variables[key]);
         }
     });
     return variableMap;
@@ -30095,10 +30096,8 @@ class EnvTreeUtility {
         };
         for (let [key, value] of envVariables.entries()) {
             let envVarTreeIterator = envVarTree;
-            // TODO: SUpport ignore setting
-            // TODO: Support split char setting
-            console.debug('Checking key', key);
             let envVariableNameArray = key.split(/_(?!_)/); // Split on single underscore, but not double underscore
+            // let envVariableNameArray = key.split('.');
             for (let variableName of envVariableNameArray) {
                 if (envVarTreeIterator.child[variableName] === undefined || typeof envVarTreeIterator.child[variableName] === 'function') {
                     envVarTreeIterator.child[variableName] = {
@@ -30120,12 +30119,10 @@ class EnvTreeUtility {
         }
         let key = jsonObjectKey[index];
         let envChild = envVarTree.child[key.toUpperCase()];
-        console.log('key', key);
-        console.log('envChild', envChild);
         if (envChild === undefined || typeof envChild === 'function') {
             return undefined;
         }
-        return this.checkEnvTreePath(jsonObjectKey, index + 1, jsonObjectKeyLength, envChild);
+        return this.checkEnvTreePath(jsonObjectKey, index + 1, jsonObjectKeyLength, envVarTree.child[key.toUpperCase()]);
     }
 }
 exports.EnvTreeUtility = EnvTreeUtility;
@@ -30221,9 +30218,7 @@ class JsonSubstitution {
     }
     substituteJsonVariable(jsonObject, envObject) {
         let isValueChanged = false;
-        console.log('jsonObject', JSON.stringify(jsonObject));
         for (let jsonChild in jsonObject) {
-            console.log('jsonChild', jsonChild);
             let jsonChildArray = jsonChild.split('.');
             let resultNode = this.envTreeUtil.checkEnvTreePath(jsonChildArray, 0, jsonChildArray.length, envObject);
             if (resultNode != undefined) {
@@ -31001,7 +30996,7 @@ class VariableSubstitution {
                     fileContent = fileContent.slice(1);
                 }
                 if (this.isJson(file, fileContent)) {
-                    console.log("Applying variable substitution on JSON file!: " + file);
+                    console.log("Applying variable substitution on JSON file: " + file);
                     let jsonSubsitution = new jsonVariableSubstitutionUtility_1.JsonSubstitution();
                     let jsonObject = this.fileContentCache.get(file);
                     let isJsonSubstitutionApplied = jsonSubsitution.substituteJsonVariable(jsonObject, envVariableUtility_1.EnvTreeUtility.getEnvVarTree());
