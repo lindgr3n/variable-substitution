@@ -1,6 +1,6 @@
 export function isPredefinedVariable(variable: string): boolean {
     let predefinedVarPrefix = ['runner.', 'azure_http_user_agent', 'common.', 'system.'];
-    for(let varPrefix of predefinedVarPrefix) {        
+    for(let varPrefix of predefinedVarPrefix) {
         if(variable.toLowerCase().startsWith(varPrefix)) {
             return true;
         }
@@ -13,7 +13,8 @@ export function getVariableMap() {
     let variables = process.env;
     Object.keys(variables).forEach(key => {
         if(!isPredefinedVariable(key)) {
-            variableMap.set(key, variables[key]);
+            // Store each environment key as uppercase to make it case-insensitive
+            variableMap.set(key.toUpperCase(), variables[key]);
         }
     });
     return variableMap;
@@ -61,11 +62,8 @@ export class EnvTreeUtility {
         };
         for(let [key, value] of envVariables.entries()) {
             let envVarTreeIterator = envVarTree;
-            // TODO: SUpport ignore setting
-            // TODO: Support split char setting
-            console.debug('Checking key', key);
-            
             let envVariableNameArray = key.split(/_(?!_)/);  // Split on single underscore, but not double underscore
+            // let envVariableNameArray = key.split('.');
             
             for(let variableName of envVariableNameArray) {
                 if(envVarTreeIterator.child[variableName] === undefined || typeof envVarTreeIterator.child[variableName] === 'function') {
@@ -89,14 +87,11 @@ export class EnvTreeUtility {
         }
         let key = jsonObjectKey[index];
         let envChild = envVarTree.child[ key.toUpperCase() ]
-        console.log('key', key);
-        console.log('envChild', envChild);
-        
         
         if(envChild === undefined || typeof envChild === 'function') {
             return undefined;
-       }
-        return this.checkEnvTreePath(jsonObjectKey, index + 1, jsonObjectKeyLength, envChild);
+        }
+        return this.checkEnvTreePath(jsonObjectKey, index + 1, jsonObjectKeyLength, envVarTree.child[ key.toUpperCase() ]);
     }
 
     private envVarTree: varTreeNode = null;
