@@ -1,32 +1,33 @@
 {
-  "name": "filetransform",
+  "name": "@ornskoldsvikskommun/variable-substitution",
   "version": "1.0.0",
   "description": "File transformation and variable substitution task: Update tokens in your XML based configuration files and then replaces those tokens with variable values. Currently XML, JSON, YAML file formats are supported for variable substitution.",
   "main": "index.js",
   "scripts": {
     "test": "mocha -r ts-node/register src/**/*.test.ts",
-    "build": "tsc",
+    "build": "ncc build src/variableSubstitution.ts --license licenses.txt",
     "coverage": "nyc npm run test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SumiranAgg/filetransform.git"
+    "url": "https://github.com/ornskoldsvikskommun/variable-substitution"
   },
   "keywords": [
     "action",
     "utility"
   ],
-  "author": "Sumiran Aggarwal <suaggar@microsoft.com>",
+  "author": "Johan Lindgren <johan.lindgren@xlent.se>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/SumiranAgg/filetransform/issues"
+    "url": "https://github.com/ornskoldsvikskommun/variable-substitution/issues"
   },
-  "homepage": "https://github.com/SumiranAgg/filetransform#readme",
+  "homepage": "https://github.com/ornskoldsvikskommun/variable-substitution#readme",
   "devDependencies": {
     "@types/chai": "^5.0.1",
     "@types/minimatch": "^5.1.2",
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.13.0",
+    "@vercel/ncc": "^0.38.3",
     "chai": "^4.4.1",
     "mocha": "^11.1.0",
     "nyc": "^17.1.0",

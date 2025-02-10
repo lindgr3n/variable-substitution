@@ -1,4 +1,6 @@
-# GitHub Action for substituting variables in parameterized files ![.github/workflows/ci.yml](https://github.com/microsoft/variable-substitution/workflows/.github/workflows/ci.yml/badge.svg?branch=master)
+# GitHub Action for substituting variables in parameterized files ![.github/workflows/ci.yml](https://github.com/ornskoldsvikskommun/variable-substitution/workflows/.github/workflows/ci.yml/badge.svg?branch=master)
+
+Note: Changes from fork is that we have ipdated packages and some changes to handle some custom cases of replacing environments inside our workflow.
 
 With the Variable Substitution Action for GitHub, you can apply variable substitution to XML, JSON and YAML based configuration and parameter files.
 
@@ -27,7 +29,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - uses: microsoft/variable-substitution@v1
+    - uses: ornskoldsvikskommun/variable-substitution@v1
       with:
         files: '${{ github.workspace }}/appsettings.json, ${{ github.workspace }}/appsettings.Development.json'
         secrets: ${{ toJSON(secrets) }}
@@ -38,6 +40,15 @@ jobs:
         SECRET: ${{ secrets.SOME_SECRET }}
 
  ```
+
+# Build
+
+Did not get the existing build to work in the workflow (guess it neeed to commit all of node_moduel) so instead we used the following from the [GitHub documentation](https://docs.github.com/en/actions/sharing-automations/creating-actions/creating-a-javascript-action#commit-tag-and-push-your-action) and bundled it all into one file using [@vercel/ncc](https://github.com/vercel/ncc)
+
+```bash 
+ncc build src\variableSubstitution.ts --license licenses.txt
+```
+
 # Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
