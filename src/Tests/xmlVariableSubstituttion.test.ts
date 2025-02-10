@@ -13,19 +13,19 @@ describe('Test Xml Variable Substitution', () => {
         let envVarUtilityMock = sinon.mock(envVarUtility);
         envVarUtilityMock.expects('getVariableMap').returns(
             new Map([
-                ['conntype', 'new_connType'],
-                ['MyDB', 'TestDB'],
-                ['webpages:Version' , '1.1.7.3'],
-                ['xdt:Transform' , 'DelAttributes'],
-                ['xdt:Locator' , 'Match(tag)'],
+                ['CONNTYPE', 'new_connType'],
+                ['MYDB', 'TestDB'],
+                ['WEBPAGES:VERSION' , '1.1.7.3'],
+                ['XDT:TRANSFORM' , 'DelAttributes'],
+                ['XDT:LOCATOR' , 'Match(tag)'],
                 ['DefaultConnection', "Url=https://primary;Database=db1;ApiKey=11111111-1111-1111-1111-111111111111;Failover = {Url:'https://secondary', ApiKey:'11111111-1111-1111-1111-111111111111'}"],
                 ['OtherDefaultConnection', 'connectionStringValue2'],
                 ['ParameterConnection', 'New_Connection_String From xml var subs'],
                 ['connectionString', 'replaced_value'],
-                ['invariantName', 'System.Data.SqlServer'],
-                ['blatvar', 'ApplicationSettingReplacedValue'],
-                ['log_level', 'error,warning'],
-                ['Email:ToOverride', '']
+                ['INVARIANTNAME', 'System.Data.SqlServer'],
+                ['BLATVAR', 'ApplicationSettingReplacedValue'],
+                ['LOG_LEVEL', 'error,warning'],
+                ['EMAIL:TOOVERRIDE', '']
             ])
         );
 
