@@ -30798,7 +30798,7 @@ class XmlSubstitution {
         for (var attributeName in xmlDomNodeAttributes) {
             var attributeNameValue = (attributeName === "key" || attributeName == "name") ? xmlDomNodeAttributes[attributeName] : attributeName;
             var attributeName = (attributeName === "key" || attributeName == "name") ? "value" : attributeName;
-            if (this.variableMap.get(attributeNameValue) != undefined) {
+            if (this.variableMap.get(attributeNameValue.toUpperCase()) != undefined) {
                 let ConfigFileAppSettingsTokenName = ConfigFileAppSettingsToken + '(' + attributeNameValue + ')';
                 let isValueReplaced = false;
                 if (xmlDomNode.getAttr(attributeName) != undefined) {
@@ -30819,7 +30819,7 @@ class XmlSubstitution {
                     }
                 }
                 if (isValueReplaced) {
-                    this.replacableTokenValues[ConfigFileAppSettingsTokenName] = this.variableMap.get(attributeNameValue).replace(/"/g, "'");
+                    this.replacableTokenValues[ConfigFileAppSettingsTokenName] = this.variableMap.get(attributeNameValue.toUpperCase()).replace(/"/g, "'");
                     isSubstitutionApplied = true;
                 }
             }
