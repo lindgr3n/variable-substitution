@@ -72,7 +72,7 @@ export class VariableSubstitution {
                     fileContent = fileContent.slice(1);
                 }
                 if(this.isJson(file, fileContent)) {
-                    console.log("Applying variable substitution on JSON file!: " + file);
+                    console.log("Applying variable substitution on JSON file: " + file);
                     let jsonSubsitution =  new JsonSubstitution();
                     let jsonObject = this.fileContentCache.get(file);
                     let isJsonSubstitutionApplied = jsonSubsitution.substituteJsonVariable(jsonObject, EnvTreeUtility.getEnvVarTree());
