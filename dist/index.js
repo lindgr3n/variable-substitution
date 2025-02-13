@@ -30119,7 +30119,6 @@ class EnvTreeUtility {
         }
         let key = jsonObjectKey[index];
         let envChild = envVarTree.child[key.toUpperCase()];
-        console.log('Key', key, 'EnvChild', envChild);
         if (envChild === undefined || typeof envChild === 'function') {
             return undefined;
         }
@@ -30247,7 +30246,20 @@ class JsonSubstitution {
                             break;
                         case 'string':
                             console.log('SubstitutingValueonKeyWithString', jsonChild, resultNode.value);
-                            jsonObject[jsonChild] = resultNode.value;
+                            // IF the value is a object we need to parse it before storing
+                            try {
+                                let parsedValue = JSON.parse(resultNode.value);
+                                if (typeof parsedValue === 'object' && parsedValue !== null) {
+                                    jsonObject[jsonChild] = parsedValue;
+                                }
+                                else {
+                                    jsonObject[jsonChild] = resultNode.value;
+                                }
+                            }
+                            catch (e) {
+                                jsonObject[jsonChild] = resultNode.value;
+                            }
+                        // jsonObject[jsonChild] = resultNode.value;
                     }
                     isValueChanged = true;
                 }
