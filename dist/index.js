@@ -30119,6 +30119,7 @@ class EnvTreeUtility {
         }
         let key = jsonObjectKey[index];
         let envChild = envVarTree.child[key.toUpperCase()];
+        console.log('Key', key, 'EnvChild', envChild);
         if (envChild === undefined || typeof envChild === 'function') {
             return undefined;
         }
@@ -30223,6 +30224,7 @@ class JsonSubstitution {
             let resultNode = this.envTreeUtil.checkEnvTreePath(jsonChildArray, 0, jsonChildArray.length, envObject);
             if (resultNode != undefined) {
                 if (resultNode.isEnd) {
+                    console.log('Type', resultNode.value, typeof (jsonObject[jsonChild]));
                     switch (typeof (jsonObject[jsonChild])) {
                         case 'number':
                             console.log('SubstitutingValueonKeyWithNumber', jsonChild, resultNode.value);
