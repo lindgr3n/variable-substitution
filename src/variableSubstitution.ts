@@ -15,7 +15,7 @@ export class VariableSubstitution {
         let vars: Record<string, string>
         let varsInput = core.getInput("vars", { required: false });
         try {
-            vars = JSON.parse(varsInput)
+            vars = JSON.parse(varsInput || '{}')
           } catch (e) {
             throw new Error(`Cannot parse JSON vars.
             Make sure you add the following to this action:
@@ -32,7 +32,7 @@ export class VariableSubstitution {
         let secrets: Record<string, string>
         let secretsInput = core.getInput("secrets", { required: false });
         try {
-            secrets = JSON.parse(secretsInput)
+            secrets = JSON.parse(secretsInput || '{}')
           } catch (e) {
             throw new Error(`Cannot parse JSON secrets.
             Make sure you add the following to this action:

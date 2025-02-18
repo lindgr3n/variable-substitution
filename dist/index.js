@@ -30953,7 +30953,7 @@ class VariableSubstitution {
             let vars;
             let varsInput = core.getInput("vars", { required: false });
             try {
-                vars = JSON.parse(varsInput);
+                vars = JSON.parse(varsInput || '{}');
             }
             catch (e) {
                 throw new Error(`Cannot parse JSON vars.
@@ -30970,7 +30970,7 @@ class VariableSubstitution {
             let secrets;
             let secretsInput = core.getInput("secrets", { required: false });
             try {
-                secrets = JSON.parse(secretsInput);
+                secrets = JSON.parse(secretsInput || '{}');
             }
             catch (e) {
                 throw new Error(`Cannot parse JSON secrets.
